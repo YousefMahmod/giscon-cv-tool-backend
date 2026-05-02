@@ -1,18 +1,39 @@
 import express from "express";
 import { participationController } from "../controllers/participationController.js";
+import {
+  validateParticipationCreate,
+  validateParticipationUpdate,
+  validateParticipationQuery,
+} from "../middleware/validators/participationValidators.js";
 
 const router = express.Router();
 
-// GET /staff/participation?staff_id=X&project_id=Y - Get participation details
-router.get("/", participationController.getParticipation);
+// GET /staff/participation - Get participation with optional filters
+router.get(
+  "/",
+  validateParticipationQuery,
+  participationController.getParticipation,
+);
 
 // POST /staff/participation - Assign staff to project
-router.post("/", participationController.createParticipation);
+router.post(
+  "/",
+  validateParticipationCreate,
+  participationController.createParticipation,
+);
 
 // PUT /staff/participation - Update participation
-router.put("/", participationController.updateParticipation);
+router.put(
+  "/",
+  validateParticipationUpdate,
+  participationController.updateParticipation,
+);
 
-// DELETE /staff/participation?staff_id=X&project_id=Y - Remove staff from project
-router.delete("/", participationController.deleteParticipation);
+// DELETE /staff/participation - Remove staff from project
+router.delete(
+  "/",
+  validateParticipationQuery,
+  participationController.deleteParticipation,
+);
 
 export default router;

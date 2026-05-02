@@ -20,13 +20,8 @@ export const staffController = {
   // POST /staff - Create new staff
   async createStaff(req: Request, res: Response) {
     try {
-      const { name, email, phone, bio, skills } = req.body;
-
-      // Validate required fields
-      if (!name || !email) {
-        res.status(400).json({ error: "Name and email are required" });
-        return;
-      }
+      // Validation is handled by middleware
+      const { email } = req.body;
 
       // Check if email already exists
       const existingStaff = await staffModel.findByEmail(email);
@@ -54,7 +49,7 @@ export const staffController = {
   async updateStaff(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id as string);
-      const { name, email, phone, bio, skills } = req.body;
+      const { email } = req.body;
 
       // Check if staff exists
       const existingStaff = await staffModel.findById(id);

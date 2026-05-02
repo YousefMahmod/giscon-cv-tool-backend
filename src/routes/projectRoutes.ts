@@ -1,5 +1,10 @@
 import express from "express";
 import { projectController } from "../controllers/projectController.js";
+import { validateIdParam } from "../middleware/validators/common.js";
+import {
+  validateProjectCreate,
+  validateProjectUpdate,
+} from "../middleware/validators/projectValidators.js";
 
 const router = express.Router();
 
@@ -7,12 +12,17 @@ const router = express.Router();
 router.get("/", projectController.getAllProjects);
 
 // POST /projects - Create new project
-router.post("/", projectController.createProject);
+router.post("/", validateProjectCreate, projectController.createProject);
 
 // PUT /projects/:id - Update project
-router.put("/:id", projectController.updateProject);
+router.put(
+  "/:id",
+  validateIdParam,
+  validateProjectUpdate,
+  projectController.updateProject,
+);
 
 // DELETE /projects/:id - Delete project
-router.delete("/:id", projectController.deleteProject);
+router.delete("/:id", validateIdParam, projectController.deleteProject);
 
 export default router;

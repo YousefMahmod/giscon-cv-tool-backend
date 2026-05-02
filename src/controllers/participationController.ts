@@ -45,16 +45,8 @@ export const participationController = {
   // POST /staff/participation - Assign staff to project
   async createParticipation(req: Request, res: Response) {
     try {
-      const { staff_id, staff_name, project_id, project_name, role } = req.body;
-
-      // Validate required fields
-      if (!staff_id || !staff_name || !project_id || !project_name || !role) {
-        res.status(400).json({
-          error:
-            "staff_id, staff_name, project_id, project_name, and role are required",
-        });
-        return;
-      }
+      // Validation is handled by middleware
+      const { staff_id, project_id } = req.body;
 
       // Check if participation already exists
       const existingParticipation =
@@ -80,13 +72,8 @@ export const participationController = {
   // PUT /staff/participation - Update participation
   async updateParticipation(req: Request, res: Response) {
     try {
+      // Validation is handled by middleware
       const { staff_id, project_id } = req.body;
-
-      // Validate required fields
-      if (!staff_id || !project_id) {
-        res.status(400).json({ error: "staff_id and project_id are required" });
-        return;
-      }
 
       // Check if participation exists
       const existingParticipation =
@@ -113,13 +100,9 @@ export const participationController = {
   // DELETE /staff/participation - Remove staff from project
   async deleteParticipation(req: Request, res: Response) {
     try {
+      // Validation is handled by middleware
       const staffId = parseInt(req.query.staff_id as string);
       const projectId = parseInt(req.query.project_id as string);
-
-      if (!staffId || !projectId) {
-        res.status(400).json({ error: "staff_id and project_id are required" });
-        return;
-      }
 
       // Check if participation exists
       const existingParticipation =

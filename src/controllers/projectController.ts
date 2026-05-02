@@ -20,14 +20,7 @@ export const projectController = {
   // POST /projects - Create new project
   async createProject(req: Request, res: Response) {
     try {
-      const { name, client } = req.body;
-
-      // Validate required fields
-      if (!name || !client) {
-        res.status(400).json({ error: "Name and client are required" });
-        return;
-      }
-
+      // Validation is handled by middleware
       const projectData = buildCreateProjectDTO(req.body);
       const newProject = await projectModel.create(projectData);
 
