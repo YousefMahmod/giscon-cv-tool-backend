@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Environment variables (CRITICAL: Never upload your DB password!)
+.env
+.env.local
+.env.development.local
+
+# Build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Backend specific: Local uploads
+src/uploads/avatars/*
+!src/uploads/avatars/.gitkeep
