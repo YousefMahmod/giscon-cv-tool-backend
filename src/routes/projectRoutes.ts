@@ -25,4 +25,7 @@ router.put(
 // DELETE /projects/:id - Delete project
 router.delete("/:id", validateIdParam, projectController.deleteProject);
 
+// GET /projects/:id - Get project details with assigned staffs
+router.get("/:id", validateIdParam, projectController.getProjectWithStaffs);
+
 export default router;

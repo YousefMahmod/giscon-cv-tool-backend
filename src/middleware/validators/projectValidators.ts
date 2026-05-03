@@ -58,6 +58,7 @@ export const validateProjectUpdate = (
   if (
     !name &&
     !client &&
+    !req.body.description &&
     !req.body.location &&
     !req.body.start_date &&
     !req.body.end_date &&
@@ -94,6 +95,8 @@ export const validateProjectUpdate = (
   }
 
   // Sanitize optional fields
+  if (req.body.description)
+    req.body.description = sanitizeString(req.body.description);
   if (req.body.location) req.body.location = sanitizeString(req.body.location);
   if (req.body.technologies)
     req.body.technologies = sanitizeString(req.body.technologies);

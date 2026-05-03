@@ -2,6 +2,7 @@
 export interface ProjectCreateRequest {
   name: string;
   client: string;
+  description?: string;
   location?: string;
   start_date?: string;
   end_date?: string;
@@ -11,6 +12,7 @@ export interface ProjectCreateRequest {
 export interface ProjectUpdateRequest {
   name?: string;
   client?: string;
+  description?: string;
   location?: string;
   start_date?: string;
   end_date?: string;

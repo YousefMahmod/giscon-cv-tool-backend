@@ -4,13 +4,18 @@ import {
   buildCreateStaffDTO,
   buildUpdateStaffDTO,
 } from "../utils/dtoBuilders.js";
+import {
+  transformStaffWithUrls,
+  transformStaffArrayWithUrls,
+} from "../utils/urlBuilder.js";
 
 export const staffController = {
   // GET /staff - Get all staff
   async getAllStaff(req: Request, res: Response) {
     try {
       const staff = await staffModel.findAll();
-      res.json(staff);
+      const staffWithUrls = transformStaffArrayWithUrls(staff, req);
+      res.json(staffWithUrls);
     } catch (error) {
       console.error("Error fetching staff:", error);
       res.status(500).json({ error: "Failed to fetch staff" });
@@ -37,8 +42,9 @@ export const staffController = {
 
       const staffData = buildCreateStaffDTO(req.body, profile_picture);
       const newStaff = await staffModel.create(staffData);
+      const staffWithUrls = transformStaffWithUrls(newStaff, req);
 
-      res.status(201).json(newStaff);
+      res.status(201).json(staffWithUrls);
     } catch (error) {
       console.error("Error creating staff:", error);
       res.status(500).json({ error: "Failed to create staff" });
@@ -74,8 +80,9 @@ export const staffController = {
 
       const updateData = buildUpdateStaffDTO(req.body, profile_picture);
       const updatedStaff = await staffModel.update(id, updateData);
+      const staffWithUrls = transformStaffWithUrls(updatedStaff, req);
 
-      res.json(updatedStaff);
+      res.json(staffWithUrls);
     } catch (error) {
       console.error("Error updating staff:", error);
       res.status(500).json({ error: "Failed to update staff" });
@@ -93,7 +100,8 @@ export const staffController = {
         return;
       }
 
-      res.json(staff);
+      const staffWithUrls = transformStaffWithUrls(staff, req);
+      res.json(staffWithUrls);
     } catch (error) {
       console.error("Error fetching staff details:", error);
       res.status(500).json({ error: "Failed to fetch staff details" });
@@ -111,7 +119,8 @@ export const staffController = {
         return;
       }
 
-      res.json(staff);
+      const staffWithUrls = transformStaffWithUrls(staff, req);
+      res.json(staffWithUrls);
     } catch (error) {
       console.error("Error fetching staff projects:", error);
       res.status(500).json({ error: "Failed to fetch staff projects" });

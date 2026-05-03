@@ -4,6 +4,7 @@ export interface Staff {
   name: string;
   email: string;
   phone?: string;
+  job_title?: string;
   profile_picture?: string;
   bio?: string;
   skills?: string;
@@ -15,6 +16,7 @@ export interface CreateStaffDTO {
   name: string;
   email: string;
   phone?: string;
+  job_title?: string;
   profile_picture?: string;
   bio?: string;
   skills?: string;
@@ -24,6 +26,7 @@ export interface UpdateStaffDTO {
   name?: string;
   email?: string;
   phone?: string;
+  job_title?: string;
   profile_picture?: string;
   bio?: string;
   skills?: string;
@@ -34,6 +37,7 @@ export interface Project {
   id: number;
   name: string;
   client: string;
+  description?: string;
   location?: string;
   start_date?: Date;
   end_date?: Date;
@@ -45,6 +49,7 @@ export interface Project {
 export interface CreateProjectDTO {
   name: string;
   client: string;
+  description?: string;
   location?: string;
   start_date?: string;
   end_date?: string;
@@ -54,6 +59,7 @@ export interface CreateProjectDTO {
 export interface UpdateProjectDTO {
   name?: string;
   client?: string;
+  description?: string;
   location?: string;
   start_date?: string;
   end_date?: string;

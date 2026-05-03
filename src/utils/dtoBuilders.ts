@@ -31,6 +31,7 @@ export function buildCreateStaffDTO(
     name: body.name,
     email: body.email,
     ...(body.phone && { phone: body.phone }),
+    ...(body.job_title && { job_title: body.job_title }),
     ...(profilePicturePath && { profile_picture: profilePicturePath }),
     ...(body.bio && { bio: body.bio }),
     ...(body.skills && { skills: body.skills }),
@@ -45,6 +46,7 @@ export function buildUpdateStaffDTO(
     ...(body.name && { name: body.name }),
     ...(body.email && { email: body.email }),
     ...(body.phone !== undefined && { phone: body.phone }),
+    ...(body.job_title !== undefined && { job_title: body.job_title }),
     ...(profilePicturePath && { profile_picture: profilePicturePath }),
     ...(body.bio !== undefined && { bio: body.bio }),
     ...(body.skills !== undefined && { skills: body.skills }),
@@ -61,6 +63,7 @@ export function buildCreateProjectDTO(
   return {
     name: body.name,
     client: body.client,
+    ...(body.description && { description: body.description }),
     ...(body.location && { location: body.location }),
     ...(body.start_date && { start_date: body.start_date }),
     ...(body.end_date && { end_date: body.end_date }),
@@ -74,6 +77,7 @@ export function buildUpdateProjectDTO(
   return {
     ...(body.name && { name: body.name }),
     ...(body.client && { client: body.client }),
+    ...(body.description !== undefined && { description: body.description }),
     ...(body.location !== undefined && { location: body.location }),
     ...(body.start_date !== undefined && { start_date: body.start_date }),
     ...(body.end_date !== undefined && { end_date: body.end_date }),

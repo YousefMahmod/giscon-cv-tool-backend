@@ -45,6 +45,8 @@ export const validateStaffCreate = (
   }
 
   // Sanitize optional text fields
+  if (req.body.job_title)
+    req.body.job_title = sanitizeString(req.body.job_title);
   if (req.body.bio) req.body.bio = sanitizeString(req.body.bio);
   if (req.body.skills) req.body.skills = sanitizeString(req.body.skills);
 
@@ -73,6 +75,7 @@ export const validateStaffUpdate = (
     !name &&
     !email &&
     !phone &&
+    !req.body.job_title &&
     !req.body.bio &&
     !req.body.skills &&
     !req.file
@@ -109,6 +112,8 @@ export const validateStaffUpdate = (
 
   // Sanitize optional fields
   if (phone) req.body.phone = sanitizeString(phone);
+  if (req.body.job_title)
+    req.body.job_title = sanitizeString(req.body.job_title);
   if (req.body.bio) req.body.bio = sanitizeString(req.body.bio);
   if (req.body.skills) req.body.skills = sanitizeString(req.body.skills);
 

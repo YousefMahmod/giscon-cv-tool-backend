@@ -4,6 +4,10 @@ import {
   buildCreateProjectDTO,
   buildUpdateProjectDTO,
 } from "../utils/dtoBuilders.js";
+import {
+  buildFileUrl,
+  transformStaffArrayWithUrls,
+} from "../utils/urlBuilder.js";
 
 export const projectController = {
   // GET /projects - Get all projects
@@ -79,6 +83,32 @@ export const projectController = {
     } catch (error) {
       console.error("Error deleting project:", error);
       res.status(500).json({ error: "Failed to delete project" });
+    }
+  },
+
+  // GET /projects/:id/staffs - Get project details with assigned staffs
+  async getProjectWithStaffs(req: Request, res: Response) {
+    try {
+      const id = parseInt(req.params.id as string);
+
+      const project = await projectModel.findByIdWithStaffs(id);
+      if (!project) {
+        res.status(404).json({ error: "Project not found" });
+        return;
+      }
+
+      // Convert staff profile_picture relative paths to full URLs
+      if (Array.isArray(project.staffs)) {
+        project.staffs = transformStaffArrayWithUrls(
+          project.staffs,
+          req as any,
+        );
+      }
+
+      res.json(project);
+    } catch (error) {
+      console.error("Error fetching project with staffs:", error);
+      res.status(500).json({ error: "Failed to fetch project" });
     }
   },
 };

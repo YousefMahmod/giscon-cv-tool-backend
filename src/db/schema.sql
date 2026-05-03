@@ -9,6 +9,7 @@ CREATE TABLE staff (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     phone VARCHAR(50),
+    job_title VARCHAR(255),
     profile_picture VARCHAR(500),
     bio TEXT,
     skills TEXT,
@@ -21,6 +22,7 @@ CREATE TABLE projects (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     client VARCHAR(255) NOT NULL,
+    description TEXT,
     location VARCHAR(255),
     start_date DATE,
     end_date DATE,
@@ -71,13 +73,13 @@ CREATE TRIGGER update_participation_updated_at BEFORE UPDATE ON participation
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Insert sample data for testing (optional)
-INSERT INTO staff (name, email, phone, bio, skills) VALUES
-    ('John Doe', 'john.doe@example.com', '+1234567890', 'Full-stack developer with 5+ years of experience building scalable web applications. Passionate about clean code and modern web technologies.', 'JavaScript, TypeScript, Node.js, React'),
-    ('Jane Smith', 'jane.smith@example.com', '+1234567891', 'Backend engineer specializing in cloud infrastructure and database optimization. Strong focus on system reliability and performance.', 'Python, Django, PostgreSQL, Docker');
+INSERT INTO staff (name, email, phone, job_title, bio, skills) VALUES
+    ('John Doe', 'john.doe@example.com', '+1234567890', 'Senior Full Stack Developer', 'Full-stack developer with 5+ years of experience building scalable web applications. Passionate about clean code and modern web technologies.', 'JavaScript, TypeScript, Node.js, React'),
+    ('Jane Smith', 'jane.smith@example.com', '+1234567891', 'Backend Engineer', 'Backend engineer specializing in cloud infrastructure and database optimization. Strong focus on system reliability and performance.', 'Python, Django, PostgreSQL, Docker');
 
-INSERT INTO projects (name, client, location, start_date, end_date, technologies) VALUES
-    ('E-Commerce Platform', 'ABC Corp', 'New York', '2024-01-15', '2024-06-30', 'React, Node.js, PostgreSQL'),
-    ('Mobile App Development', 'XYZ Inc', 'San Francisco', '2024-03-01', '2024-09-30', 'React Native, Firebase');
+INSERT INTO projects (name, client, description, location, start_date, end_date, technologies) VALUES
+    ('E-Commerce Platform', 'ABC Corp', 'A comprehensive e-commerce solution with modern UI/UX, payment integration, and real-time inventory management. Built to handle high traffic and provide seamless shopping experience.', 'New York', '2024-01-15', '2024-06-30', 'React, Node.js, PostgreSQL'),
+    ('Mobile App Development', 'XYZ Inc', 'Cross-platform mobile application for iOS and Android with real-time notifications, offline support, and cloud synchronization. Focus on performance and user engagement.', 'San Francisco', '2024-03-01', '2024-09-30', 'React Native, Firebase');
 
 INSERT INTO participation (staff_id, staff_name, project_id, project_name, role, responsibilities) VALUES
     (1, 'John Doe', 1, 'E-Commerce Platform', 'Full Stack Developer', 'Develop frontend and backend features, API integration'),

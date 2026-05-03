@@ -22,6 +22,61 @@ export const projectModel = {
     return result.rows[0] || null;
   },
 
+  // Get project by ID with its assigned staff (join participation -> staff)
+  async findByIdWithStaffs(id: number): Promise<any | null> {
+    const result = await pool.query(
+      `SELECT p.*, 
+              s.id as staff_id,
+              s.name as staff_name,
+              s.email as staff_email,
+              s.phone as staff_phone,
+              s.job_title as staff_job_title,
+              s.profile_picture as staff_profile_picture,
+              pt.role as role,
+              pt.responsibilities as responsibilities
+       FROM projects p
+       LEFT JOIN participation pt ON p.id = pt.project_id
+       LEFT JOIN staff s ON pt.staff_id = s.id
+       WHERE p.id = $1`,
+      [id],
+    );
+
+    if (!result.rows || result.rows.length === 0) return null;
+
+    // Build project base from first row
+    const row0: any = result.rows[0];
+    const project: any = {
+      id: row0.id,
+      name: row0.name,
+      client: row0.client,
+      description: row0.description,
+      location: row0.location,
+      start_date: row0.start_date,
+      end_date: row0.end_date,
+      technologies: row0.technologies,
+      created_at: row0.created_at,
+      updated_at: row0.updated_at,
+      staffs: [],
+    };
+
+    for (const r of result.rows) {
+      if (r.staff_id) {
+        project.staffs.push({
+          id: r.staff_id,
+          name: r.staff_name,
+          email: r.staff_email,
+          phone: r.staff_phone,
+          job_title: r.staff_job_title,
+          profile_picture: r.staff_profile_picture,
+          role: r.role,
+          responsibilities: r.responsibilities,
+        });
+      }
+    }
+
+    return project;
+  },
+
   // Check if project has assigned staff
   async hasAssignedStaff(id: number): Promise<boolean> {
     const result = await pool.query(
@@ -34,12 +89,13 @@ export const projectModel = {
   // Create new project
   async create(data: CreateProjectDTO): Promise<Project> {
     const result = await pool.query(
-      `INSERT INTO projects (name, client, location, start_date, end_date, technologies)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO projects (name, client, description, location, start_date, end_date, technologies)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING *`,
       [
         data.name,
         data.client,
+        data.description,
         data.location,
         data.start_date,
         data.end_date,
@@ -62,6 +118,10 @@ export const projectModel = {
     if (data.client !== undefined) {
       fields.push(`client = $${paramCount++}`);
       values.push(data.client);
+    }
+    if (data.description !== undefined) {
+      fields.push(`description = $${paramCount++}`);
+      values.push(data.description);
     }
     if (data.location !== undefined) {
       fields.push(`location = $${paramCount++}`);

@@ -55,7 +55,9 @@ export const staffModel = {
       name: result.rows[0].name,
       email: result.rows[0].email,
       phone: result.rows[0].phone,
+      job_title: result.rows[0].job_title,
       profile_picture: result.rows[0].profile_picture,
+      bio: result.rows[0].bio,
       skills: result.rows[0].skills,
       created_at: result.rows[0].created_at,
       updated_at: result.rows[0].updated_at,
@@ -114,13 +116,14 @@ export const staffModel = {
   // Create new staff
   async create(data: CreateStaffDTO): Promise<Staff> {
     const result = await pool.query(
-      `INSERT INTO staff (name, email, phone, profile_picture, bio, skills)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO staff (name, email, phone, job_title, profile_picture, bio, skills)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING *`,
       [
         data.name,
         data.email,
         data.phone,
+        data.job_title,
         data.profile_picture,
         data.bio,
         data.skills,
@@ -146,6 +149,10 @@ export const staffModel = {
     if (data.phone !== undefined) {
       fields.push(`phone = $${paramCount++}`);
       values.push(data.phone);
+    }
+    if (data.job_title !== undefined) {
+      fields.push(`job_title = $${paramCount++}`);
+      values.push(data.job_title);
     }
     if (data.profile_picture !== undefined) {
       fields.push(`profile_picture = $${paramCount++}`);
