@@ -103,3 +103,16 @@ export interface StaffWithProjects extends Staff {
     responsibilities?: string;
   }>;
 }
+
+// Error response shapes
+export interface FieldError {
+  field?: string;
+  message: string;
+}
+
+export interface ErrorPayload {
+  error: string;
+  errors?: FieldError[];
+}
+
+export type ErrorResponse = ErrorPayload;

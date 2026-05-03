@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { sanitizeString, type ValidationError } from "./common.js";
+import sendError from "../../utils/errorResponse.js";
 
 // Validate project creation
 export const validateProjectCreate = (
@@ -35,10 +36,7 @@ export const validateProjectCreate = (
     req.body.technologies = sanitizeString(req.body.technologies);
 
   if (errors.length > 0) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors,
-    });
+    sendError(res, 400, "Validation failed", errors);
     return;
   }
 
@@ -64,12 +62,9 @@ export const validateProjectUpdate = (
     !req.body.end_date &&
     !req.body.technologies
   ) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors: [
-        { field: "body", message: "At least one field must be provided" },
-      ],
-    });
+    sendError(res, 400, "Validation failed", [
+      { field: "body", message: "At least one field must be provided" },
+    ]);
     return;
   }
 
@@ -102,10 +97,7 @@ export const validateProjectUpdate = (
     req.body.technologies = sanitizeString(req.body.technologies);
 
   if (errors.length > 0) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors,
-    });
+    sendError(res, 400, "Validation failed", errors);
     return;
   }
 

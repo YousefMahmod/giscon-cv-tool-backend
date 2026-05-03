@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { sanitizeString, type ValidationError } from "./common.js";
+import sendError from "../../utils/errorResponse.js";
 
 // Validate participation creation
 export const validateParticipationCreate = (
@@ -60,10 +61,7 @@ export const validateParticipationCreate = (
     req.body.responsibilities = sanitizeString(req.body.responsibilities);
 
   if (errors.length > 0) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors,
-    });
+    sendError(res, 400, "Validation failed", errors);
     return;
   }
 
@@ -109,10 +107,7 @@ export const validateParticipationUpdate = (
     req.body.responsibilities = sanitizeString(req.body.responsibilities);
 
   if (errors.length > 0) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors,
-    });
+    sendError(res, 400, "Validation failed", errors);
     return;
   }
 
@@ -130,12 +125,9 @@ export const validateParticipationQuery = (
   if (staff_id) {
     const id = parseInt(staff_id as string);
     if (isNaN(id) || id <= 0) {
-      res.status(400).json({
-        error: "Validation failed",
-        errors: [
-          { field: "staff_id", message: "staff_id must be a positive integer" },
-        ],
-      });
+      sendError(res, 400, "Validation failed", [
+        { field: "staff_id", message: "staff_id must be a positive integer" },
+      ]);
       return;
     }
   }
@@ -143,15 +135,12 @@ export const validateParticipationQuery = (
   if (project_id) {
     const id = parseInt(project_id as string);
     if (isNaN(id) || id <= 0) {
-      res.status(400).json({
-        error: "Validation failed",
-        errors: [
-          {
-            field: "project_id",
-            message: "project_id must be a positive integer",
-          },
-        ],
-      });
+      sendError(res, 400, "Validation failed", [
+        {
+          field: "project_id",
+          message: "project_id must be a positive integer",
+        },
+      ]);
       return;
     }
   }

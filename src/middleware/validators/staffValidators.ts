@@ -4,6 +4,7 @@ import {
   isValidEmail,
   type ValidationError,
 } from "./common.js";
+import sendError from "../../utils/errorResponse.js";
 
 // Validate staff creation
 export const validateStaffCreate = (
@@ -51,10 +52,7 @@ export const validateStaffCreate = (
   if (req.body.skills) req.body.skills = sanitizeString(req.body.skills);
 
   if (errors.length > 0) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors,
-    });
+    sendError(res, 400, "Validation failed", errors);
     return;
   }
 
@@ -80,12 +78,9 @@ export const validateStaffUpdate = (
     !req.body.skills &&
     !req.file
   ) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors: [
-        { field: "body", message: "At least one field must be provided" },
-      ],
-    });
+    sendError(res, 400, "Validation failed", [
+      { field: "body", message: "At least one field must be provided" },
+    ]);
     return;
   }
 
@@ -118,10 +113,7 @@ export const validateStaffUpdate = (
   if (req.body.skills) req.body.skills = sanitizeString(req.body.skills);
 
   if (errors.length > 0) {
-    res.status(400).json({
-      error: "Validation failed",
-      errors,
-    });
+    sendError(res, 400, "Validation failed", errors);
     return;
   }
 

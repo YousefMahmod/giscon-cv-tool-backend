@@ -8,6 +8,7 @@ import {
   buildFileUrl,
   transformStaffArrayWithUrls,
 } from "../utils/urlBuilder.js";
+import sendError from "../utils/errorResponse.js";
 
 export const projectController = {
   // GET /projects - Get all projects
@@ -17,7 +18,7 @@ export const projectController = {
       res.json(projects);
     } catch (error) {
       console.error("Error fetching projects:", error);
-      res.status(500).json({ error: "Failed to fetch projects" });
+      sendError(res, 500, "Failed to fetch projects");
     }
   },
 
@@ -31,7 +32,7 @@ export const projectController = {
       res.status(201).json(newProject);
     } catch (error) {
       console.error("Error creating project:", error);
-      res.status(500).json({ error: "Failed to create project" });
+      sendError(res, 500, "Failed to create project");
     }
   },
 
@@ -43,7 +44,9 @@ export const projectController = {
       // Check if project exists
       const existingProject = await projectModel.findById(id);
       if (!existingProject) {
-        res.status(404).json({ error: "Project not found" });
+        sendError(res, 404, "Project not found", [
+          { field: "id", message: "No project with this ID" },
+        ]);
         return;
       }
 
@@ -53,7 +56,7 @@ export const projectController = {
       res.json(updatedProject);
     } catch (error) {
       console.error("Error updating project:", error);
-      res.status(500).json({ error: "Failed to update project" });
+      sendError(res, 500, "Failed to update project");
     }
   },
 
@@ -65,16 +68,18 @@ export const projectController = {
       // Check if project exists
       const existingProject = await projectModel.findById(id);
       if (!existingProject) {
-        res.status(404).json({ error: "Project not found" });
+        sendError(res, 404, "Project not found", [
+          { field: "id", message: "No project with this ID" },
+        ]);
         return;
       }
 
       // Check if project has assigned staff
       const hasStaff = await projectModel.hasAssignedStaff(id);
       if (hasStaff) {
-        res
-          .status(400)
-          .json({ error: "Cannot delete project with assigned staff" });
+        sendError(res, 400, "Cannot delete project with assigned staff", [
+          { field: "id", message: "Project has assigned staff" },
+        ]);
         return;
       }
 
@@ -82,7 +87,7 @@ export const projectController = {
       res.json({ message: "Project deleted successfully" });
     } catch (error) {
       console.error("Error deleting project:", error);
-      res.status(500).json({ error: "Failed to delete project" });
+      sendError(res, 500, "Failed to delete project");
     }
   },
 
@@ -93,7 +98,9 @@ export const projectController = {
 
       const project = await projectModel.findByIdWithStaffs(id);
       if (!project) {
-        res.status(404).json({ error: "Project not found" });
+        sendError(res, 404, "Project not found", [
+          { field: "id", message: "No project with this ID" },
+        ]);
         return;
       }
 
@@ -108,7 +115,9 @@ export const projectController = {
       res.json(project);
     } catch (error) {
       console.error("Error fetching project with staffs:", error);
-      res.status(500).json({ error: "Failed to fetch project" });
+      sendError(res, 500, "Failed to fetch project", [
+        { field: "id", message: "Error fetching project with staffs" },
+      ]);
     }
   },
 };

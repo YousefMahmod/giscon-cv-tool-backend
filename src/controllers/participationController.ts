@@ -4,6 +4,7 @@ import {
   buildCreateParticipationDTO,
   buildUpdateParticipationDTO,
 } from "../utils/dtoBuilders.js";
+import sendError from "../utils/errorResponse.js";
 
 export const participationController = {
   // GET /staff/participation - Get participation details
@@ -23,7 +24,9 @@ export const participationController = {
           projectId,
         );
         if (!participation) {
-          res.status(404).json({ error: "Participation not found" });
+          sendError(res, 404, "Participation not found", [
+            { field: "id", message: "No participation found" },
+          ]);
           return;
         }
         res.json(participation);
@@ -38,7 +41,9 @@ export const participationController = {
       res.json(participations);
     } catch (error) {
       console.error("Error fetching participation:", error);
-      res.status(500).json({ error: "Failed to fetch participation" });
+      sendError(res, 500, "Failed to fetch participation", [
+        { field: "id", message: "Error fetching participation" },
+      ]);
     }
   },
 
@@ -52,9 +57,16 @@ export const participationController = {
       const existingParticipation =
         await participationModel.findByStaffAndProject(staff_id, project_id);
       if (existingParticipation) {
-        res
-          .status(400)
-          .json({ error: "Staff is already assigned to this project" });
+        sendError(res, 400, "Staff is already assigned to this project", [
+          {
+            field: "staff_id",
+            message: "Staff is already assigned to this project",
+          },
+          {
+            field: "project_id",
+            message: "Staff is already assigned to this project",
+          },
+        ]);
         return;
       }
 
@@ -65,7 +77,9 @@ export const participationController = {
       res.status(201).json(newParticipation);
     } catch (error) {
       console.error("Error creating participation:", error);
-      res.status(500).json({ error: "Failed to create participation" });
+      sendError(res, 500, "Failed to create participation", [
+        { field: "id", message: "Error creating participation" },
+      ]);
     }
   },
 
@@ -79,7 +93,13 @@ export const participationController = {
       const existingParticipation =
         await participationModel.findByStaffAndProject(staff_id, project_id);
       if (!existingParticipation) {
-        res.status(404).json({ error: "Participation not found" });
+        sendError(res, 404, "Participation not found", [
+          { field: "staff_id", message: "No participation with this staff ID" },
+          {
+            field: "project_id",
+            message: "No participation with this project ID",
+          },
+        ]);
         return;
       }
 
@@ -93,7 +113,9 @@ export const participationController = {
       res.json(updatedParticipation);
     } catch (error) {
       console.error("Error updating participation:", error);
-      res.status(500).json({ error: "Failed to update participation" });
+      sendError(res, 500, "Failed to update participation", [
+        { field: "id", message: "Error updating participation" },
+      ]);
     }
   },
 
@@ -108,7 +130,13 @@ export const participationController = {
       const existingParticipation =
         await participationModel.findByStaffAndProject(staffId, projectId);
       if (!existingParticipation) {
-        res.status(404).json({ error: "Participation not found" });
+        sendError(res, 404, "Participation not found", [
+          { field: "staff_id", message: "No participation with this staff ID" },
+          {
+            field: "project_id",
+            message: "No participation with this project ID",
+          },
+        ]);
         return;
       }
 
@@ -116,7 +144,9 @@ export const participationController = {
       res.json({ message: "Participation deleted successfully" });
     } catch (error) {
       console.error("Error deleting participation:", error);
-      res.status(500).json({ error: "Failed to delete participation" });
+      sendError(res, 500, "Failed to delete participation", [
+        { field: "id", message: "Error deleting participation" },
+      ]);
     }
   },
 };

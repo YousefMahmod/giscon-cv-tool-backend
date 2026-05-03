@@ -8,6 +8,7 @@ import {
   transformStaffWithUrls,
   transformStaffArrayWithUrls,
 } from "../utils/urlBuilder.js";
+import sendError from "../utils/errorResponse.js";
 
 export const staffController = {
   // GET /staff - Get all staff
@@ -18,7 +19,7 @@ export const staffController = {
       res.json(staffWithUrls);
     } catch (error) {
       console.error("Error fetching staff:", error);
-      res.status(500).json({ error: "Failed to fetch staff" });
+      sendError(res, 500, "Failed to fetch staff");
     }
   },
 
@@ -31,7 +32,9 @@ export const staffController = {
       // Check if email already exists
       const existingStaff = await staffModel.findByEmail(email);
       if (existingStaff) {
-        res.status(400).json({ error: "Email already exists" });
+        sendError(res, 400, "Email already exists", [
+          { field: "email", message: "Email already exists" },
+        ]);
         return;
       }
 
@@ -47,7 +50,7 @@ export const staffController = {
       res.status(201).json(staffWithUrls);
     } catch (error) {
       console.error("Error creating staff:", error);
-      res.status(500).json({ error: "Failed to create staff" });
+      sendError(res, 500, "Failed to create staff");
     }
   },
 
@@ -60,7 +63,9 @@ export const staffController = {
       // Check if staff exists
       const existingStaff = await staffModel.findById(id);
       if (!existingStaff) {
-        res.status(404).json({ error: "Staff not found" });
+        sendError(res, 404, "Staff not found", [
+          { field: "id", message: "No staff with this ID" },
+        ]);
         return;
       }
 
@@ -68,7 +73,9 @@ export const staffController = {
       if (email && email !== existingStaff.email) {
         const emailExists = await staffModel.findByEmail(email);
         if (emailExists) {
-          res.status(400).json({ error: "Email already exists" });
+          sendError(res, 400, "Email already exists", [
+            { field: "email", message: "Email already exists" },
+          ]);
           return;
         }
       }
@@ -85,7 +92,7 @@ export const staffController = {
       res.json(staffWithUrls);
     } catch (error) {
       console.error("Error updating staff:", error);
-      res.status(500).json({ error: "Failed to update staff" });
+      sendError(res, 500, "Failed to update staff");
     }
   },
 
@@ -96,7 +103,9 @@ export const staffController = {
       const staff = await staffModel.findByIdWithProjects(id);
 
       if (!staff) {
-        res.status(404).json({ error: "Staff not found" });
+        sendError(res, 404, "Staff not found", [
+          { field: "id", message: "No staff with this ID" },
+        ]);
         return;
       }
 
@@ -104,7 +113,7 @@ export const staffController = {
       res.json(staffWithUrls);
     } catch (error) {
       console.error("Error fetching staff details:", error);
-      res.status(500).json({ error: "Failed to fetch staff details" });
+      sendError(res, 500, "Failed to fetch staff details");
     }
   },
 
@@ -115,7 +124,9 @@ export const staffController = {
       const staff = await staffModel.findByIdWithProjectsList(id);
 
       if (!staff) {
-        res.status(404).json({ error: "Staff not found" });
+        sendError(res, 404, "Staff not found", [
+          { field: "id", message: "No staff with this ID" },
+        ]);
         return;
       }
 
@@ -123,7 +134,7 @@ export const staffController = {
       res.json(staffWithUrls);
     } catch (error) {
       console.error("Error fetching staff projects:", error);
-      res.status(500).json({ error: "Failed to fetch staff projects" });
+      sendError(res, 500, "Failed to fetch staff projects");
     }
   },
 };
