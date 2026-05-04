@@ -151,4 +151,65 @@ export const staffModel = {
     const result = await pool.query("DELETE FROM staff WHERE id = $1", [id]);
     return (result.rowCount ?? 0) > 0;
   },
+
+  // Get all staff with their projects (optimized with JOIN)
+  async findAllWithProjects(): Promise<any[]> {
+    const result = await pool.query(
+      `SELECT 
+        s.*,
+        p.id as project_id,
+        p.name as project_name,
+        p.client,
+        p.description,
+        p.location,
+        p.start_date,
+        p.end_date,
+        p.technologies,
+        pt.role,
+        pt.responsibilities
+      FROM staff s
+      LEFT JOIN participation pt ON s.id = pt.staff_id
+      LEFT JOIN projects p ON pt.project_id = p.id
+      ORDER BY s.created_at DESC, p.start_date DESC`,
+    );
+
+    // Group results by staff
+    const staffMap = new Map<number, any>();
+
+    for (const row of result.rows) {
+      if (!staffMap.has(row.id)) {
+        staffMap.set(row.id, {
+          staff_id: row.id,
+          staff_name: row.name,
+          email: row.email,
+          phone: row.phone,
+          job_title: row.job_title,
+          profile_picture: row.profile_picture,
+          bio: row.bio,
+          skills: row.skills,
+          created_at: row.created_at,
+          updated_at: row.updated_at,
+          projects: [],
+        });
+      }
+
+      // Add project if exists
+      if (row.project_id) {
+        staffMap.get(row.id)!.projects.push({
+          project_id: row.project_id,
+          project_name: row.project_name,
+          role: row.role,
+          responsibilities: row.responsibilities,
+          client: row.client,
+          description: row.description,
+          location: row.location,
+          start_date: row.start_date,
+          end_date: row.end_date,
+          technologies: row.technologies,
+        });
+      }
+    }
+
+    return Array.from(staffMap.values());
+  },
 };

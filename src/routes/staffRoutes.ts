@@ -12,7 +12,7 @@ const router = express.Router();
 // GET /staff - Get all staff
 router.get("/", staffController.getAllStaff);
 
-// GET /staff/with-projects - Get all staff with projects from participation table
+// GET /staff/with-projects - Get all staff with projects from participation table and return with each project its details from project table
 router.get("/with-projects", staffController.getAllStaffWithProjects);
 
 // POST /staff - Create new staff (with profile picture)
