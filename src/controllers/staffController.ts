@@ -9,6 +9,7 @@ import {
   transformStaffArrayWithUrls,
 } from "../utils/urlBuilder.js";
 import sendError from "../utils/errorResponse.js";
+import { participationModel } from "../models/participationModel.js";
 
 export const staffController = {
   // GET /staff - Get all staff
@@ -117,24 +118,45 @@ export const staffController = {
     }
   },
 
-  // GET /staff/:id/projects - Get staff with their projects list
-  async getStaffProjects(req: Request, res: Response) {
+  // GET /staff/with-projects - Get all staff with projects from participation table only
+  async getAllStaffWithProjects(req: Request, res: Response) {
     try {
-      const id = parseInt(req.params.id as string);
-      const staff = await staffModel.findByIdWithProjectsList(id);
+      const staff = await staffModel.findAll();
+      const participations = await participationModel.findAll();
 
-      if (!staff) {
-        sendError(res, 404, "Staff not found", [
-          { field: "id", message: "No staff with this ID" },
-        ]);
-        return;
+      const map = new Map<
+        number,
+        Array<{
+          project_id: number;
+          project_name: string;
+          role: string;
+          responsibilities?: string | undefined;
+        }>
+      >();
+
+      for (const p of participations) {
+        const arr = map.get(p.staff_id) || [];
+        const proj = {
+          project_id: p.project_id,
+          project_name: p.project_name,
+          role: p.role,
+          responsibilities: p.responsibilities,
+        };
+
+        arr.push(proj);
+        map.set(p.staff_id, arr);
       }
 
-      const staffWithUrls = transformStaffWithUrls(staff, req);
-      res.json(staffWithUrls);
+      const result = staff.map((s) => ({
+        staff_name: s.name,
+        staff_id: s.id,
+        projects: map.get(s.id) || [],
+      }));
+
+      res.json(result);
     } catch (error) {
-      console.error("Error fetching staff projects:", error);
-      sendError(res, 500, "Failed to fetch staff projects");
+      console.error("Error fetching staff with projects:", error);
+      sendError(res, 500, "Failed to fetch staff with projects");
     }
   },
 };

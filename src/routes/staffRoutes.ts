@@ -12,6 +12,9 @@ const router = express.Router();
 // GET /staff - Get all staff
 router.get("/", staffController.getAllStaff);
 
+// GET /staff/with-projects - Get all staff with projects from participation table
+router.get("/with-projects", staffController.getAllStaffWithProjects);
+
 // POST /staff - Create new staff (with profile picture)
 router.post(
   "/",
@@ -31,8 +34,5 @@ router.put(
 
 // GET /staff/:id - Get staff by ID with projects
 router.get("/:id", validateIdParam, staffController.getStaffById);
-
-// GET /staff/:id/projects - Get staff with their projects
-router.get("/:id/projects", validateIdParam, staffController.getStaffProjects);
 
 export default router;

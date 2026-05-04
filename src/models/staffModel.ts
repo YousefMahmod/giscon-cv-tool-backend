@@ -79,40 +79,6 @@ export const staffModel = {
     return staff;
   },
 
-  // Get staff with basic project list
-  async findByIdWithProjectsList(id: number): Promise<any> {
-    const staffResult = await pool.query(
-      "SELECT id, name, email FROM staff WHERE id = $1",
-      [id],
-    );
-
-    if (staffResult.rows.length === 0) {
-      return null;
-    }
-
-    const projectsResult = await pool.query(
-      `SELECT 
-        p.id,
-        p.name,
-        p.client,
-        p.location,
-        p.start_date,
-        p.end_date,
-        p.technologies,
-        pt.role,
-        pt.responsibilities
-      FROM projects p
-      INNER JOIN participation pt ON p.id = pt.project_id
-      WHERE pt.staff_id = $1`,
-      [id],
-    );
-
-    return {
-      ...staffResult.rows[0],
-      projects: projectsResult.rows,
-    };
-  },
-
   // Create new staff
   async create(data: CreateStaffDTO): Promise<Staff> {
     const result = await pool.query(

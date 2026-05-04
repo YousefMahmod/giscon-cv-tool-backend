@@ -10,10 +10,10 @@ export const participationController = {
   // GET /staff/participation - Get participation details
   async getParticipation(req: Request, res: Response) {
     try {
-      const staffId = req.query.staff_id
+      const staffId = req.query?.staff_id
         ? parseInt(req.query.staff_id as string)
         : undefined;
-      const projectId = req.query.project_id
+      const projectId = req.query?.project_id
         ? parseInt(req.query.project_id as string)
         : undefined;
 
@@ -60,10 +60,6 @@ export const participationController = {
         sendError(res, 400, "Staff is already assigned to this project", [
           {
             field: "staff_id",
-            message: "Staff is already assigned to this project",
-          },
-          {
-            field: "project_id",
             message: "Staff is already assigned to this project",
           },
         ]);
