@@ -112,9 +112,9 @@ export const TemplateRegistry: Record<string, TemplateConfig> = {
 
       return `<div class="project">
                 <div class="project-header">
-                  ${datesLocation ? `<div class="project-dates-location">${datesLocation}</div>` : ""}
-                  <div class="project-title">${project.name}</div>
-                  <div class="project-company">${project.role}</div>
+                <div class="project-title">${project.name}</div>
+                <div class="project-company">${project.role}</div>
+                ${datesLocation ? `<div class="project-dates-location">${datesLocation}</div>` : ""}
                 </div>
                 ${responsibilities}
               </div>`;

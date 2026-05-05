@@ -1,6 +1,6 @@
 # GISCON CV Tool Backend
 
-A TypeScript/Express backend API for managing staff CVs, projects, and generating customizable PDF resumes with multiple templates.
+A TypeScript/Express backend API for managing staff, projects, and generating customizable PDF resumes with multiple templates.
 
 ## Getting Started
 
@@ -13,6 +13,14 @@ Before running the server, ensure you have the following installed:
 - **npm** or **yarn** package manager
 
 ### Database Setup
+
+Before running the steps below, ensure the PostgreSQL server is running on your machine. On macOS you can start it with Homebrew:
+
+```bash
+brew services start postgresql
+# or for a specific version, e.g. postgresql@18
+brew services start postgresql@18
+```
 
 1. Create a PostgreSQL database:
 
@@ -66,13 +74,6 @@ npm install
 npm run dev
 ```
 
-**Production build**:
-
-```bash
-npm run build
-npm start
-```
-
 The server will start on `http://localhost:3000` (or the port specified in `.env`).
 
 ---
@@ -123,6 +124,7 @@ giscon-cv-tool-backend/
 │   │   └── templateRoutes.ts
 │   │
 │   ├── templates/                    # HTML CV templates
+│   │   └── icons.ts                  # export icons used in templates
 │   │   └── cv/
 │   │       ├── atlantic-blue.html    # Dark sidebar template
 │   │       ├── classic-serif.html    # Traditional serif template

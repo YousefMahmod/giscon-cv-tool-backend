@@ -12,190 +12,216 @@
         }
 
         body {
-            font-family: 'Arial', 'Helvetica', sans-serif;
-            font-size: 10.5pt;
+            /* Using a cleaner font stack to match the professional look of image_01fac1.png */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
             line-height: 1.5;
             color: #333;
             background: #fff;
+            height: 100vh;
         }
 
         .page {
             display: flex;
-            min-height: 100vh;
+            height: 100%;
         }
 
         .sidebar {
             width: 320px;
-            background: #2c3e50;
+            background: #2d3e50;
             color: #fff;
-            padding: 50px 35px;
+            padding: 60px 30px;
             flex-shrink: 0;
+            height: 100%;
         }
 
         .profile-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .profile-placeholder {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: #fff;
-            margin: 0 auto 20px;
-            border: 4px solid rgba(255,255,255,0.3);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #2c3e50;
-            font-size: 9pt;
-        }
-
-        .name {
-            font-size: 24pt;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        .job-title {
-            font-size: 12pt;
-            color: #ecf0f1;
+            flex-direction: column;
+            align-items: start;
             margin-bottom: 20px;
         }
 
-        .contact-info {
-            font-size: 9.5pt;
-            color: #ecf0f1;
-            margin-bottom: 5px;
+        .profile-placeholder {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
         }
 
+        .profile-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+
+        .job-title {
+            font-size: 14pt;
+            color: #ecf0f1;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .contact-info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: start;
+            font-size: 10pt;
+            color: #ecf0f1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+        }
+
+        .icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+
         .sidebar-section {
-            margin-bottom: 35px;
+            margin-top: 45px;
+            width: 100%;
         }
 
         .sidebar-section-title {
-            font-size: 11pt;
+            font-size: 12pt;
             font-weight: bold;
             color: #fff;
             margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-top: 8px;
+            padding-bottom: 8px;    
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            background-color: #253644;
+            gap: 16px;
+            width: 100%;
         }
 
         .sidebar-text {
-            font-size: 10pt;
+            font-size: 9.5pt;
             line-height: 1.7;
             color: #ecf0f1;
-            text-align: justify;
+            text-align: justify; /* Matches the clean block text in image_01fac1.png profile */
         }
 
+        /* MAIN CONTENT STYLES */
         .main-content {
             flex: 1;
-            padding: 50px 45px;
+            padding: 60px 45px;
             background: #fff;
         }
 
         .section {
             margin-bottom: 35px;
+            width: 100%;
         }
 
         .section-title {
-            font-size: 12pt;
+            background-color: #ececec;
+            font-size: 13pt;
             font-weight: bold;
             color: #2c3e50;
             margin-bottom: 18px;
+            padding-top: 8px;
             padding-bottom: 8px;
-            border-bottom: 2px solid #ecf0f1;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            width: 100%;
         }
 
-        .section-title::before {
-            content: "⚙";
-            font-size: 14pt;
-        }
-
+        /* Experience Styling */
         .project {
             margin-bottom: 25px;
         }
 
-        .project-header {
-            margin-bottom: 10px;
+        .project-meta {
+            font-size: 10pt;
+            color: #495057;
+            margin-bottom: 4px;
+            font-weight: 500;
         }
 
         .project-title {
-            font-size: 11.5pt;
+            font-size: 12.5pt;
             font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 3px;
+            color: #212529;
+            margin-bottom: 2px;
         }
 
-        .project-company {
-            font-size: 10pt;
+        .project-role {
+            font-size: 11pt;
             font-style: italic;
-            color: #666;
-            margin-bottom: 3px;
+            color: #6c757d;
+            margin-bottom: 12px;
         }
 
-        .project-dates {
-            font-size: 9.5pt;
-            color: #888;
-            margin-bottom: 8px;
+        .project-dates-location {
+            font-size: 8pt;
+            color: #6c757d;
         }
 
         .project-responsibilities li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             margin-left: 20px;
             font-size: 10pt;
             line-height: 1.6;
             color: #333;
         }
 
-        .skills-section-title {
-            font-size: 12pt;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #ecf0f1;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .skills-section-title::before {
-            content: "⚡";
-            font-size: 14pt;
+        /* Skills list matches image_01fac1.png spacing */
+        .skills-list {
+            list-style: none;
+            padding-top: 5px;
         }
 
         .skills-list li {
-            margin-bottom: 5px;
-            margin-left: 20px;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
             font-size: 10pt;
-            line-height: 1.6;
         }
 
-        .empty-projects {
-            text-align: center;
-            padding: 30px;
-            color: #999;
-            font-style: italic;
+        .skills-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #333;
         }
 
         @media print {
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            .page {
-                min-height: auto;
-            }
+            .page { min-height: auto; }
+            .sidebar { -webkit-print-color-adjust: exact; background-color: #2d3e50 !important; }
         }
     </style>
 </head>
@@ -204,33 +230,56 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="profile-section">
-                <div class="profile-placeholder">
-                    Photo
-                </div>
+                <!-- Center aligned profile picture -->
+                
                 <div class="name">{{staffName}}</div>
                 <div class="job-title">{{jobTitle}}</div>
-                <div class="contact-info">✉ {{email}}</div>
-                {{phone}}
+
+                <div class="profile-container">
+                    <div class="profile-placeholder">{{profilePicture}}</div>
+                </div>
+                
+                <div class="contact-info-container">
+                    <div class="contact-item">{{emailIcon}} {{email}}</div>
+                    <div class="contact-item">{{phoneIcon}} {{phone}}</div>
+                </div>
             </div>
 
-            <!-- Profile/Bio Section -->
+            <!-- Profile/Bio -->
             <div class="sidebar-section">
-                <div class="sidebar-section-title">👤 Profile</div>
+                <div class="sidebar-section-title">
+                    <span>👤</span>
+                    <span>PROFILE</span>
+                </div>
                 <div class="sidebar-text">{{bio}}</div>
             </div>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Work Experience -->
+            <!-- Work Experience Section -->
             <div class="section">
-                <div class="section-title">Work Experience</div>
+                <div class="section-title">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="8" y1="3" x2="8" y2="7"/>
+                        </svg>
+                    </span> 
+                    <span>WORK EXPERIENCE</span>
+                </div>
                 {{projectsContent}}
             </div>
 
-            <!-- Skills -->
+            <!-- Skills Section -->
             <div class="section">
-                <div class="skills-section-title">Skills</div>
+                <div class="section-title">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                    </span> 
+                    <span>SKILLS</span>
+                </div>
                 <ul class="skills-list">
                     {{skillsList}}
                 </ul>

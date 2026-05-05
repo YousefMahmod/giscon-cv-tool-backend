@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import puppeteer from "puppeteer";
 import type { ExportCVData } from "../types/export.types.js";
 import { getTemplateConfig, renderProjects } from "./templateRegistry.js";
+import { emailIcon, phoneIcon } from "../templates/icons.utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,16 +39,22 @@ export function renderTemplate(
   let rendered = html;
 
   // Replace staff placeholders
-  rendered = rendered.replace(/{{staffName}}/g, data.staff.name || "");
-  rendered = rendered.replace(/{{email}}/g, data.staff.email || "");
+  rendered = rendered.replace(/{{staffName}}/g, data.staff.name);
+  rendered = rendered.replace(/{{emailIcon}}/g, `${emailIcon} `);
+  rendered = rendered.replace(/{{email}}/g, `${data.staff.email}`);
   rendered = rendered.replace(
     /{{jobTitle}}/g,
     data.staff.job_title || "Professional",
   );
 
   // Phone - simple inline text
-  const phoneText = data.staff.phone ? `<span>${data.staff.phone}</span>` : "";
-  rendered = rendered.replace(/{{phone}}/g, phoneText);
+  const phone = data.staff.phone;
+  const phoneIconValue = phone ? `${phoneIcon} ` : "";
+  const phoneText = phone ? `${phone}` : "";
+  rendered = phone
+    ? rendered.replace(/{{phoneIcon}}/g, `${phoneIconValue}`)
+    : rendered;
+  rendered = phone ? rendered.replace(/{{phone}}/g, `${phoneText}`) : rendered;
 
   // Profile picture - img element or placeholder
   const profilePicture = data.staff.profile_picture
@@ -56,7 +63,9 @@ export function renderTemplate(
   rendered = rendered.replace(/{{profilePicture}}/g, profilePicture);
 
   // Bio - just the text content
-  rendered = rendered.replace(/{{bio}}/g, data.staff.bio || "No bio available");
+  rendered = !!data.staff.bio
+    ? rendered.replace(/{{bio}}/g, data.staff.bio)
+    : rendered;
 
   // Skills - just the list items
   let skillsList = "";
