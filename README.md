@@ -84,9 +84,9 @@ The server will start on `http://localhost:3001` (or the port specified in `.env
 
 ```
 giscon-cv-tool-backend/
+├── .env                              # Environment variables
 ├── src/
 │   ├── index.ts                      # Application entry point
-│   ├── .env                          # Environment variables
 │   │
 │   ├── controllers/                  # Request handlers
 │   │   ├── exportController.ts       # CV PDF export logic
