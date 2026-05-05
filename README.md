@@ -45,6 +45,7 @@ psql -U your_username -d giscon_cv_tool -f src/db/seed-templates.sql
 
 ```env
 PORT=3001
+HOST=localhost
 DB_USER=your_username
 DB_HOST=localhost
 DB_NAME=giscon_cv_tool
@@ -75,7 +76,7 @@ npm install
 npm run dev
 ```
 
-The server will start on `http://localhost:3000` (or the port specified in `.env`).
+The server will start on `http://localhost:3001` (or the port specified in `.env`).
 
 ---
 
