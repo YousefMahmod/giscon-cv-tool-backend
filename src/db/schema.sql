@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS participation CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS staff CASCADE;
+DROP TABLE IF EXISTS templates CASCADE;
 
 -- Create staff table
 CREATE TABLE staff (
@@ -47,6 +48,18 @@ CREATE TABLE participation (
     UNIQUE (staff_id, project_id)
 );
 
+-- Create templates table for CV export
+CREATE TABLE templates (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    subtitle VARCHAR(255),
+    img VARCHAR(500),
+    template_name VARCHAR(255) NOT NULL UNIQUE,
+    version VARCHAR(50) DEFAULT '1.0',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create indexes for better query performance
 CREATE INDEX idx_staff_email ON staff(email);
 CREATE INDEX idx_participation_staff_id ON participation(staff_id);
@@ -70,6 +83,9 @@ CREATE TRIGGER update_projects_updated_at BEFORE UPDATE ON projects
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_participation_updated_at BEFORE UPDATE ON participation
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_templates_updated_at BEFORE UPDATE ON templates
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Insert sample data for testing (optional)

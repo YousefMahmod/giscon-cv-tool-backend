@@ -62,3 +62,27 @@ export function transformStaffArrayWithUrls(
 ): any[] {
   return staffArray.map((staff) => transformStaffWithUrls(staff, req));
 }
+
+/**
+ * Transform template object to include full URLs for images
+ */
+export function transformTemplateWithUrls(template: any, req?: Request): any {
+  if (!template) return null;
+
+  return {
+    ...template,
+    img: buildFileUrl(template.img, req),
+  };
+}
+
+/**
+ * Transform array of template objects to include full URLs
+ */
+export function transformTemplateArrayWithUrls(
+  templateArray: any[],
+  req?: Request,
+): any[] {
+  return templateArray.map((template) =>
+    transformTemplateWithUrls(template, req),
+  );
+}

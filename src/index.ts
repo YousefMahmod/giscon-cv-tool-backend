@@ -8,6 +8,8 @@ import { fileURLToPath } from "url";
 import staffRoutes from "./routes/staffRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import participationRoutes from "./routes/participationRoutes.js";
+import templateRoutes from "./routes/templateRoutes.js";
+import exportRoutes from "./routes/exportRoutes.js";
 
 // Import middleware
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
@@ -43,6 +45,8 @@ app.get("/", (req: Request, res: Response) => {
       staff: "/staff",
       projects: "/projects",
       participation: "/staff/participation",
+      templates: "/templates",
+      export: "/download-cv/:staffId",
     },
   });
 });
@@ -51,6 +55,8 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/staff", staffRoutes);
 app.use("/projects", projectRoutes);
 app.use("/staff/participation", participationRoutes);
+app.use("/templates", templateRoutes);
+app.use("/", exportRoutes);
 
 // Error handling
 app.use(notFoundHandler);

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{staffName}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.5;
+            color: #333;
+            background: #fff;
+        }
+
+        .page {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 320px;
+            background: #2c3e50;
+            color: #fff;
+            padding: 50px 35px;
+            flex-shrink: 0;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #fff;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e50;
+            font-size: 9pt;
+        }
+
+        .name {
+            font-size: 24pt;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .job-title {
+            font-size: 12pt;
+            color: #ecf0f1;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            font-size: 9.5pt;
+            color: #ecf0f1;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 35px;
+        }
+
+        .sidebar-section-title {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-text {
+            font-size: 10pt;
+            line-height: 1.7;
+            color: #ecf0f1;
+            text-align: justify;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 50px 45px;
+            background: #fff;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ecf0f1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: "⚙";
+            font-size: 14pt;
+        }
+
+        .project {
+            margin-bottom: 25px;
+        }
+
+        .project-header {
+            margin-bottom: 10px;
+        }
+
+        .project-title {
+            font-size: 11.5pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+
+        .project-company {
+            font-size: 10pt;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .project-dates {
+            font-size: 9.5pt;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .project-responsibilities li {
+            margin-bottom: 6px;
+            margin-left: 20px;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .skills-section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ecf0f1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skills-section-title::before {
+            content: "⚡";
+            font-size: 14pt;
+        }
+
+        .skills-list li {
+            margin-bottom: 5px;
+            margin-left: 20px;
+            font-size: 10pt;
+            line-height: 1.6;
+        }
+
+        .empty-projects {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-style: italic;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .page {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="profile-placeholder">
+                    Photo
+                </div>
+                <div class="name">{{staffName}}</div>
+                <div class="job-title">{{jobTitle}}</div>
+                <div class="contact-info">✉ {{email}}</div>
+                {{phone}}
+            </div>
+
+            <!-- Profile/Bio Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">👤 Profile</div>
+                <div class="sidebar-text">{{bio}}</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Work Experience -->
+            <div class="section">
+                <div class="section-title">Work Experience</div>
+                {{projectsContent}}
+            </div>
+
+            <!-- Skills -->
+            <div class="section">
+                <div class="skills-section-title">Skills</div>
+                <ul class="skills-list">
+                    {{skillsList}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

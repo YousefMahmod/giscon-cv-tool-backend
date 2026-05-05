@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{staffName}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.5;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .page {
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #e8e8e8;
+            padding: 40px 0;
+            width: 100%;
+        }
+
+        .header-content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: #fff;
+            border: 3px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-placeholder-text {
+            font-size: 8pt;
+            color: #999;
+            text-align: center;
+        }
+
+        .header-info {
+            flex: 1;
+        }
+
+        .name {
+            font-size: 32pt;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-size: 13pt;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .contact-info {
+            font-size: 10pt;
+            color: #333;
+            display: flex;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 50px;
+            background: #fff;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 14pt; /* Slightly larger */
+            font-weight: 700;
+            text-align: center;
+            color: #333;
+            margin: 25px auto 20px;
+            padding: 8px;
+            background: #f0f0f0; /* Lighter gray */
+            text-transform: capitalize;
+            max-width: 100%; /* Make it full width like the image */
+        }
+
+        .summary-text {
+            text-align: justify;
+            line-height: 1.7;
+            color: #333;
+            font-size: 10.5pt;
+        }
+
+        .project {
+            margin-bottom: 30px;
+            display: flex; /* Using flex here is better for side-by-side */
+            gap: 40px;
+        }
+
+        .project-left {
+            flex-shrink: 0;
+            width: 150px; /* Exact width for the date column */
+            font-weight: 600;
+            color: #666;
+        }
+
+        .project-right {
+            flex: 1;
+        }
+
+        .project-company {
+            font-size: 13pt;
+            font-weight: 800; /* Extra bold for company name */
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .project-title {
+            font-size: 11pt;
+            font-style: italic; /* The job title is italicized in the goal image */
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .project-responsibilities {
+            list-style-type: disc;
+            margin-top: 8px;
+        }
+
+        .project-responsibilities li {
+            margin-bottom: 6px;
+            padding-left: 5px;
+            color: #444;
+            font-size: 10.5pt;
+        }
+
+        .project-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 12px;
+        }
+
+        .project-dates {
+            font-size: 10pt;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .project-location {
+            font-size: 9.5pt;
+            color: #666;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px 30px;
+            margin-top: 15px;
+        }
+
+        .skills-grid li {
+            margin-left: 20px;
+            font-size: 10pt;
+            line-height: 1.5;
+        }
+
+        .empty-projects {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-style: italic;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .page {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="profile-placeholder">
+                    {{profilePicture}}
+                </div>
+                <div class="header-info">
+                    <div class="name">{{staffName}}</div>
+                    <div class="job-title">{{jobTitle}}</div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span>{{email}}</span>
+                        </div>
+                        {{phone}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Summary Section -->
+            <div class="section">
+                <div class="section-title">Summary</div>
+                <div class="summary-text">{{bio}}</div>
+            </div>
+
+            <!-- Professional Experience -->
+            <div class="section">
+                <div class="section-title">Professional Experience</div>
+                {{projectsContent}}
+            </div>
+
+            <!-- Skills Section -->
+            <div class="section">
+                <div class="section-title">Skills</div>
+                <ul class="skills-grid">
+                    {{skillsList}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
