@@ -10,6 +10,7 @@ Before running the server, ensure you have the following installed:
 
 - **Node.js** (v18 or higher)
 - **PostgreSQL** (v14 or higher)
+  - brew install postgresql
 - **npm** or **yarn** package manager
 
 ### Database Setup
@@ -18,8 +19,8 @@ Before running the steps below, ensure the PostgreSQL server is running on your 
 
 ```bash
 brew services start postgresql
-# or for a specific version, e.g. postgresql@18
-brew services start postgresql@18
+# or for a specific version, e.g. postgresql@16
+brew services start postgresql@16
 ```
 
 1. Create a PostgreSQL database:
