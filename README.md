@@ -44,7 +44,7 @@ psql -U your_username -d giscon_cv_tool -f src/db/seed-templates.sql
 4. Create a `.env` file in the root directory:
 
 ```env
-PORT=3000
+PORT=3001
 DB_USER=your_username
 DB_HOST=localhost
 DB_NAME=giscon_cv_tool
